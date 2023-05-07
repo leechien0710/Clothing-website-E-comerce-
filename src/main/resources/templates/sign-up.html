@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head">
+ <script src="https://www.google.com/recaptcha/api.js"></script>
+
+</head>
+<body class="config">
+
+<div id="app">
+    <div th:replace="fragments/header :: header"></div>
+    <!--====== App Content ======-->
+    <div class="app-content">
+
+        <!--====== Section 1 ======-->
+        <div class="u-s-p-y-60">
+
+            <!--====== Section Content ======-->
+            <div class="section__content">
+                <div class="container">
+                    <div class="breadcrumb">
+                        <div class="breadcrumb__wrap">
+                            <ul class="breadcrumb__list">
+                                <li class="has-separator">
+
+                                    <a href="/">Home</a></li>
+                                <li class="is-marked">
+
+                                    <a href="/sign-up">Signup</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section 1 ======-->
+
+
+        <!--====== Section 2 ======-->
+        <div class="u-s-p-b-60">
+
+            <!--====== Section Intro ======-->
+            <div class="section__intro u-s-m-b-60">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section__text-wrap">
+                                <h1 class="section__heading u-c-secondary">CREATE AN ACCOUNT</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section Intro ======-->
+
+
+            <!--====== Section Content ======-->
+            <div class="section__content">
+                <div class="container">
+                    <div class="row row--center">
+                        <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                            <div class="l-f-o">
+                                <div class="l-f-o__pad-box">
+                                    <h1 class="gl-h1">PERSONAL INFORMATION</h1>
+                                    <form id="demo-form" class="l-f-o__form" th:action="@{/sign-up}" th:object= "${user}" method="POST">
+    <div class="gl-s-api">
+            <div class="u-s-m-b-30">
+
+        <label class="gl-label" for="reg-fname">FIRST NAME *</label>
+
+        <input class="input-text input-text--primary-style" type="text" th:field="*{firstName}"
+               id="reg-fname" placeholder="First Name">
+                       <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+               </div>
+    <div class="u-s-m-b-30">
+
+        <label class="gl-label" for="reg-lname">LAST NAME *</label>
+
+        <input class="input-text input-text--primary-style" type="text" th:field="*{lastName}"
+               id="reg-lname" placeholder="Last Name">
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        
+               </div>
+        
+        <div class="u-s-m-b-30">
+    
+
+        <label class="gl-label" for="reg-email">E-MAIL *</label>
+
+        <input class="input-text input-text--primary-style" type="text" th:field="*{email}"
+               id="reg-email" placeholder="Enter E-mail">
+                       <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+               </div>
+    <div class="u-s-m-b-30">
+
+        <label class="gl-label" for="reg-password">PASSWORD *</label>
+
+        <input class="input-text input-text--primary-style" type="password" th:field="*{password}"
+               id="reg-password" placeholder="Enter Password">
+                       <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+               </div>
+               </div>
+                <script>
+   function onSubmit(token) {
+     document.getElementById("demo-form").submit();
+   }
+ </script>
+               <div class="g-recaptcha" data-sitekey="6LeNaeslAAAAAOiBI3Sw9hfDa35_WquCq6AwJOtf" data-callback='onSubmit'></div>
+		<span th:text="${captcha}"></span>
+    <div class="u-s-m-b-15">
+		
+        <div class="u-s-m-b-15">
+            <button class="btn btn--e-transparent-brand-b-2" type="submit">CREATE</button>
+        </div>
+	        
+
+	  
+        <a class="gl-link" href="#">Return to Store</a>
+    </div>
+</form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section Content ======-->
+        </div>
+        <!--====== End - Section 2 ======-->
+    </div>
+    <!--====== End - App Content ======-->
+  <div th:replace="fragments/footer :: footer"></div>
+</div>
+<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!--====== Header Wrapper ======-->
+<div class="header-wrapper" th:fragment="header">
+
+    <!--======   Main Header ======-->
+    <header th:attr="class=${page != null && page == 'home' ? 'header--style-3' : 'header--style-1 header--box-shadow'}" >
+
+        <!--====== Nav 1 ======-->
+        <nav class="primary-nav-wrapper">
+            <div class="container">
+
+                <!--====== Primary Nav ======-->
+                <div class="primary-nav">
+
+                    <!--====== Main Logo ======-->
+
+                    <a class="main-logo" href="/">
+                        <img th:if="${page != null && page.equals('home')}" src="/images/logo/logo-2.png" alt="">
+                        <img th:if="${page == null || !page.equals('home')}" src="/images/logo/logo-1.png" alt="">
+                    </a>
+                    <!--====== End - Main Logo ======-->
+
+
+                    <!--====== Search Form ======-->
+                    <form th:if="${filter == null || #strings.isEmpty(filter.query)}" class="main-form" th:action="@{/products}" th:object="${filter}" method="post">
+
+                        <label for="main-search"></label>
+
+                        <input
+                                th:class="'input-text input-text--border-radius ' + ${page != null && page == 'home' ? 'input-text--style-2' : 'input-text--style-1'}"
+                                type="text"
+                                id="main-search" placeholder="Search" th:field="*{query}">
+
+                        <button class="btn btn--icon fas main-search-button fa-search" type="submit"></button>
+                    </form>
+
+
+                    <!--====== End - Search Form ======-->
+
+
+                    <!--====== Dropdown Main plugin ======-->
+                    <div class="menu-init" id="navigation">
+
+                        <button class="btn btn--icon toggle-button toggle-button--white fas fa-cogs"
+                                type="button"></button>
+
+                        <!--====== Menu ======-->
+                        <div class="ah-lg-mode">
+
+                            <span class="ah-close">✕ Close</span>
+
+                            <!--====== List ======-->
+                            <ul th:class="'ah-list ah-list--design1 ' + ${page != null && page.equals('home') ? 'ah-list--link-color-white' : 'ah-list--link-color-primary' }">
+                                <li class="has-dropdown">
+
+                                    <a class="mini-cart-shop-link" href="/cart"><i class="fas fa-shopping-bag"></i>
+
+                                  
+                                </li>
+                                <li class="has-dropdown" data-tooltip="tooltip" data-placement="left"
+                                    title="Account">
+
+                                    <a><i class="far fa-user-circle"></i></a>
+
+                                    <!--====== Dropdown ======-->
+
+                                    <span class="js-menu-toggle"></span>
+                                    <ul style="width:120px">
+                                        <li>
+    <a href="/account"><i class="fas fa-user-circle u-s-m-r-6"></i>
+        <div th:if="${#session != null and #session.getAttribute('user1') != null}" style="display: inline-block;">
+            <span>[[${#session.getAttribute('user1').firstName}]]</span>
+        </div>
+        <div th:if="${#session == null or #session.getAttribute('user1') == null}" style="display: inline-block;">
+            <span>Account</span>
+        </div>
+    </a>
+</li>
+
+                                        <li>
+
+                                            <a href="/sign-up"><i class="fas fa-user-plus u-s-m-r-6"></i>
+
+                                                <span>Sign-up</span></a></li>
+                                        <li>
+
+                                            <a href="/sign-in"><i class="fas fa-lock u-s-m-r-6"></i>
+
+                                                <span>Sign-in</span></a></li>
+                                        <li>
+
+                                            <a href="/sign-out"><i class="fas fa-lock-open u-s-m-r-6"></i>
+
+                                                <span>Sign-out</span></a></li>
+                                    </ul>
+                                    <!--====== End - Dropdown ======-->
+                                </li>
+                            </ul>
+                            <!--====== End - List ======-->
+                        </div>
+                        <!--====== End - Menu ======-->
+                    </div>
+                    <!--====== End - Dropdown Main plugin ======-->
+                </div>
+                <!--====== End - Primary Nav ======-->
+            </div>
+        </nav>
+        <!--====== End - Nav 1 ======-->
+
+
+        <!--====== Nav 2 ======-->
+        <nav class="secondary-nav-wrapper">
+            <div class="container">
+
+                <!--====== Secondary Nav ======-->
+                <div class="secondary-nav">
+
+                    <!--====== Dropdown Main plugin ======-->
+                    <div class="menu-init" id="navigation2">
+
+                        <button class="btn btn--icon toggle-button toggle-button--white fas fa-cog"
+                                type="button"></button>
+
+                        <!--====== Menu ======-->
+                        <div class="ah-lg-mode">
+
+                            <span class="ah-close">✕ Close</span>
+
+                            <!--====== List ======-->
+                            <ul th:class="'ah-list ah-list--design2 ' + ${page != null && page.equals('home') ? 'ah-list--link-color-white' : 'ah-list--link-color-primary' }">
+                                <li>
+                                    <a href="/">Home</a>
+                                </li>
+                                <li class="has-dropdown">
+
+                                    <a href="/products">Products<i class="fas fa-angle-down u-s-m-l-6"></i></a>
+
+                                    <!--====== Dropdown ======-->
+
+                                    <span class="js-menu-toggle"></span>
+                                    <ul style="width:170px">
+                                        <li th:each="item : ${rootCategories}" class="">
+                                            <a th:href="'/products?categoryId=' + ${item.id}" th:text="${item.name}"></a>
+                                        </li>
+                                    </ul>
+                                    <!--====== End - Dropdown ======-->
+                                </li>
+                                <li class="has-dropdown">
+
+                                    <a href="/contact">Contact</a>
+                                </li>
+                            </ul>
+                            <!--====== End - List ======-->
+                        </div>
+                        <!--====== End - Menu ======-->
+                    </div>
+                    <!--====== End - Dropdown Main plugin ======-->
+
+                </div>
+                <!--====== End - Secondary Nav ======-->
+            </div>
+        </nav>
+        <!--====== End - Nav 2 ======-->
+    </header>
+    <!--====== End - Main Header ======-->
+</div>
+<!--====== End - Header Wrapper ======-->
