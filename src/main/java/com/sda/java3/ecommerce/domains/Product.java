@@ -83,7 +83,7 @@ public class Product {
     this.salePrice = request.getSalePrice();
     this.color = request.getColor();
     this.size = request.getSize();
-    this.categoryId = request.getCategoryId();
+    this.categoryId = UUID.fromString(request.getCategoryId());
     this.image = request.getImage();
     this.createdAt = LocalDateTime.now();
   }

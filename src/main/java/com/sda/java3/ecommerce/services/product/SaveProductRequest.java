@@ -19,5 +19,5 @@ public class SaveProductRequest {
   private LocalDateTime createdAt;
   private String color;
   private String size;
-  private UUID categoryId;
+  private String categoryId;
 }

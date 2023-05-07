@@ -19,11 +19,21 @@ public class ProductApiController {
 
   private final ProductService productService;
 
-  @GetMapping("/id")
-  public ResponseEntity<Product> getProductById(@PathVariable UUID id) {
-    //        var item = this.productService.getProductById(id.toString());
+  @GetMapping("/{id}")
+  public ResponseEntity<Product> getProductById(@PathVariable String id) {
+    return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
+  }
 
-    return new ResponseEntity<>(productService.getProductById(id.toString()), HttpStatus.OK);
+  @GetMapping("/base-info/{id}")
+  public ResponseEntity<Object> getProductBaseInfoById(@PathVariable String id) {
+    try {
+      return new ResponseEntity<>(
+          productService.getProductInfoById(UUID.fromString(id)), HttpStatus.OK);
+    } catch (CustomException e) {
+      return new ResponseEntity<>(e.getMessageDetail(), HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @GetMapping
@@ -34,17 +44,18 @@ public class ProductApiController {
   @PostMapping
   public ResponseEntity<Object> save(@RequestBody @Valid SaveProductRequest request) {
     try {
-      return new ResponseEntity<>(productService.save(request), HttpStatus.CREATED);
+      productService.save(request);
     } catch (CustomException e) {
       return new ResponseEntity<>(e.getMessageDetail(), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<Object> deleteProduct(@PathVariable UUID id) {
-    productService.delete(id);
+  public ResponseEntity<Object> deleteProduct(@PathVariable String id) {
+    productService.delete(UUID.fromString(id));
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
@@ -52,11 +63,12 @@ public class ProductApiController {
   public ResponseEntity<Object> updateProduct(
       @PathVariable UUID id, @RequestBody SaveProductRequest request) {
     try {
-      return new ResponseEntity<>(productService.update(id, request), HttpStatus.ACCEPTED);
+      productService.update(id, request);
     } catch (CustomException e) {
       return new ResponseEntity<>(e.getMessageDetail(), HttpStatus.BAD_REQUEST);
     } catch (Exception e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    return new ResponseEntity<>(HttpStatus.ACCEPTED);
   }
 }
