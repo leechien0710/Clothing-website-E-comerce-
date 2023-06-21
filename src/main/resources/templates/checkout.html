@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head"></head>
+<body class="config">
+	<div id="app">
+		<div th:replace="fragments/header :: header"></div>
+		<!--====== App Content ======-->
+		<div class="app-content">
+
+			<!--====== Section 1 ======-->
+			<div class="u-s-p-y-60">
+
+				<!--====== Section Content ======-->
+				<div class="section__content">
+					<div class="container">
+						<div class="breadcrumb">
+							<div class="breadcrumb__wrap">
+								<ul class="breadcrumb__list">
+									<li class="has-separator"><a href=".">Home</a></li>
+									<li class="is-marked"><a href="/checkout">Checkout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--====== End - Section 1 ======-->
+
+
+			<!--====== Section 2 ======-->
+			<div class="u-s-p-b-60">
+
+				<!--====== Section Content ======-->
+
+				<!--====== End - Section Content ======-->
+			</div>
+			<!--====== End - Section 2 ======-->
+
+
+			<!--====== Section 3 ======-->
+			<div class="u-s-p-b-60">
+
+				<!--====== Section Content ======-->
+				<div class="section__content">
+					<div class="container">
+						<div class="checkout-f">
+							<div class="row">
+								<div class="col-lg-6">
+									<h1 class="checkout-f__h1">DELIVERY INFORMATION</h1>
+									<form class="checkout-f__delivery" action="/twilio">
+										<div class="u-s-m-b-30">
+											<div class="u-s-m-b-15">
+
+												<!--====== Check Box ======-->
+												<div class="check-box">
+
+													<input type="checkbox" id="get-address">
+													<div class="check-box__state check-box__state--primary">
+
+														<label class="check-box__label" for="get-address">Use
+															default shipping and billing address from account</label>
+													</div>
+												</div>
+												<!--====== End - Check Box ======-->
+											</div>
+
+											<!--====== First Name, Last Name ======-->
+											<div class="gl-inline">
+												<div class="u-s-m-b-15">
+
+													<label class="gl-label" for="billing-fname">FIRST
+														NAME *</label> <input class="input-text input-text--primary-style"
+														type="text" id="billing-fname" data-bill="">
+												</div>
+												<div class="u-s-m-b-15">
+
+													<label class="gl-label" for="billing-lname">LAST
+														NAME *</label> <input class="input-text input-text--primary-style"
+														type="text" id="billing-lname" data-bill="">
+												</div>
+											</div>
+											<!--====== End - First Name, Last Name ======-->
+
+
+											<!--====== E-MAIL ======-->
+											<div class="u-s-m-b-15">
+
+												<label class="gl-label" for="billing-email">E-MAIL *</label>
+
+												<input class="input-text input-text--primary-style"
+													type="text" id="billing-email" data-bill="">
+											</div>
+											<!--====== End - E-MAIL ======-->
+
+
+											<!--====== PHONE ======-->
+											<div class="u-s-m-b-15">
+
+												<label class="gl-label" for="billing-phone">PHONE *</label>
+
+												<input class="input-text input-text--primary-style"
+													type="text" id="billing-phone" data-bill="" , name="phone">
+											</div>
+											<!--====== End - PHONE ======-->
+
+
+											<!--====== Street Address ======-->
+											<!--====== Town / City ======-->
+										<div class="u-s-m-b-15">
+											<label class="gl-label" for="billing-city">CITY *</label>
+											<select id="province_select"></select>
+
+											<script>
+												var provinceAPI = 'https://online-gateway.ghn.vn/shiip/public-api/master-data/province';
+												var districtAPI = 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district';
+												var token = '96baae36-ec99-11ed-a967-deea53ba3605'; // Thay YOUR_TOKEN bằng mã thông báo của bạn
+
+												// Lấy danh sách tỉnh thành
+												fetch(provinceAPI, {
+													headers: {
+														'Content-Type': 'application/json',
+														'token': token
+													}
+												})
+													.then(function (response) {
+														return response.json();
+													})
+													.then(function (provinceData) {
+														var provinces = provinceData.data;
+														var provinceSelectElement = document.getElementById('province_select');
+														provinces.forEach(function (province) {
+															var option = document.createElement('option');
+															option.value = province.ProvinceID;
+															option.text = province.ProvinceName;
+															provinceSelectElement.appendChild(option);
+														});
+
+														// Lấy danh sách quận huyện khi tỉnh thành được chọn
+														provinceSelectElement.addEventListener('change', function () {
+															var selectedProvinceID = this.value;
+
+															// Lấy danh sách quận huyện
+															fetch(districtAPI + '?province_id=' + selectedProvinceID, {
+																headers: {
+																	'Content-Type': 'application/json',
+																	'token': token
+																}
+															})
+																.then(function (response) {
+																	return response.json();
+																})
+																.then(function (districtData) {
+																	var districts = districtData.data;
+																	var districtSelectElement = document.getElementById('district_select');
+																	districtSelectElement.innerHTML = '';
+																	districts.forEach(function (district) {
+																		var option = document.createElement('option');
+																		option.value = district.DistrictID;
+																		option.text = district.DistrictName;
+																		districtSelectElement.appendChild(option);
+																	});
+																});
+														});
+
+														// Mặc định hiển thị danh sách huyện của tỉnh thành đầu tiên
+														var defaultProvinceID = provinces[0].ProvinceID;
+														fetch(districtAPI + '?province_id=' + defaultProvinceID, {
+															headers: {
+																'Content-Type': 'application/json',
+																'Token': token
+															}
+														})
+															.then(function (response) {
+																return response.json();
+															})
+															.then(function (districtData) {
+																var districts = districtData.data;
+																var districtSelectElement = document.getElementById('district_select');
+																districtSelectElement.innerHTML = '';
+																districts.forEach(function (district) {
+																	var option = document.createElement('option');
+																	option.value = district.DistrictID;
+																	option.text = district.DistrictName;
+																	districtSelectElement.appendChild(option);
+																});
+															});
+													});
+											</script>
+										</div>
+										<!--====== End - Town / City ======-->
+										<!--====== Street Address ======-->
+										<div class="u-s-m-b-15">
+
+											<label class="gl-label" for="billing-street">STREET ADDRESS *</label>
+											<select id="district_select"></select>
+
+										</div>	<!--====== ZIP/POSTAL ======-->
+											<div class="u-s-m-b-15">
+
+												<label class="gl-label" for="billing-zip">ZIP/POSTAL
+													CODE *</label> <input class="input-text input-text--primary-style"
+													type="text" id="billing-zip" placeholder="Zip/Postal Code"
+													data-bill="">
+											</div>
+											<!--====== End - ZIP/POSTAL ======-->
+											<div class="u-s-m-b-10"></div>
+
+											<div class="u-s-m-b-10">
+
+												<label class="gl-label" for="order-note">ORDER NOTE</label>
+												<textarea class="text-area text-area--primary-style"
+													id="order-note"></textarea>
+											</div>
+											<div>
+
+												<button class="btn btn--e-transparent-brand-b-2"
+													type="submit">PAYMENT ON DELIVERY</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="col-lg-6">
+									<h1 class="checkout-f__h1">ORDER SUMMARY</h1>
+
+									<!--====== Order Summary ======-->
+									<div class="o-summary">
+										<div class="o-summary__section u-s-m-b-30">
+											<div class="o-summary__item-wrap gl-scroll">
+												<div class="o-card" th:each="cart : ${carts}">
+													<div class="o-card__flex">
+														<div class="o-card__img-wrap">
+
+															<img class="u-img-fluid"
+																th:src="'/images/product/' + ${cart.product.image}"
+																alt="">
+														</div>
+														<div class="o-card__info-wrap">
+
+															<span class="o-card__name"> <a
+																href="product-detail.html" th:text=${cart.product.name}></a></span>
+
+															<span class="o-card__quantity" th:text="${cart.quantity}"></span>
+
+															<span class="o-card__price"
+																th:text="${cart.quantity * cart.product.price}"></span>
+														</div>
+													</div>
+
+													<a class="o-card__del far fa-trash-alt"
+														th:href="@{/checkout/delete/{cartId}(cartId=${cart.id})}"></a>
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+									<div class="o-summary__section u-s-m-b-30">
+										<div class="o-summary__box">
+											<h1 class="checkout-f__h1">SHIPPING</h1>
+											<div class="ship-b">
+
+												<span class="ship-b__text">Ship to:</span>
+												<div class="ship-b__box u-s-m-b-10">
+													<p class="ship-b__p">4247 Ashford Drive Virginia
+														VA-20006 USA (+0) 900901904</p>
+
+													<a class="ship-b__edit btn--e-transparent-platinum-b-2"
+														data-modal="modal" data-modal-id="#edit-ship-address">Edit</a>
+												</div>
+
+											</div>
+										</div>
+										<div class="o-summary__section u-s-m-b-30">
+											<div class="o-summary__box">
+												<table class="o-summary__table">
+													<tbody>
+														<tr>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td></td>
+															<td></td>
+														</tr>
+														<tr>
+															<td>SUBTOTAL</td>
+															<td th:text="${session.tt}"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="o-summary__section u-s-m-b-30">
+											<div class="o-summary__box">
+												<h1 class="checkout-f__h1">PAYMENT INFORMATION</h1>
+												<form class="checkout-f__payment"
+													action="https://www.sandbox.paypal.com/cgi-bin/webscr"
+													method="post">
+													<div class="u-s-m-b-10">
+
+														<!--====== Radio Box ======-->
+														<input type="hidden" name="business"
+															value="sb-obgdj15244080@business.example.com"> <input
+															type="hidden" name="cmd" value="_xclick">
+														<!--                                                                        <label>Name</label>
+                                                                        <span>${name}</span><br>
+                                                                        <label>Phone</label>
+                                                                        <span>${phone}</span><br>
+                                                                        <label>Address</label>
+                                                                        <span>${adr}</span><br>
+                                                                        
+                                                                        <label>Total</label>
+                                                                        <span>${sessionScope.tt}</span><br>-->
+
+														<input type="hidden" name="amount"
+															th:value="${session.tt}"> <input type="hidden"
+															name="currency_code" value="USD"> <input
+															type="hidden" name="return"
+															value="http://localhost:8080/">
+														<!--====== End - Radio Box ======-->
+
+														<!--====== End - Check Box ======-->
+
+													</div>
+													<div>
+
+														<button class="btn btn--e-brand-b-2" type="submit">CHECKOUT
+															BY PAYPAL</button>
+													</div>
+												</form>
+											</div>
+											<div class="o-summary__box">
+												<form action='/charge' method='POST' id='checkout-form'>
+													<input type='hidden' th:value='${session.tt*100}' name='amount' />
+													<!-- NOTE: data-key/data-amount/data-currency will be rendered by Thymeleaf -->
+													<script src='https://checkout.stripe.com/checkout.js'
+														class='stripe-button'
+														th:attr='data-key=pk_test_51N4OcwIrDbJnwng7YXLpJM3wuzABmKmFzUQpXhcumGrPOdx8K4LzWYb8u3M67a4c0Rk16pWlrksfZ9fyOpYkKato00Y8xqzfMb, 
+         data-amount=${session.tt*100}, 
+         data-currency= USD'
+														data-name='LuDus'
+														data-description='Spring course checkout'
+														data-image='https://www.baeldung.com/wp-content/themes/baeldung/favicon/android-chrome-192x192.png'
+														data-locale='auto' data-zip-code='false'>
+   </script>
+												</form>
+											</div>
+
+										</div>
+									</div>
+									<!--====== End - Order Summary ======-->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--====== End - Section Content ======-->
+			</div>
+			<!--====== End - Section 3 ======-->
+		</div>
+		<!--====== End - App Content ======-->
+		<div th:replace="fragments/footer :: footer"></div>
+	</div>
+	<div th:replace="fragments/scripts :: scripts"></div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+stripe:
+  secret-key: sk_test_51N4OcwIrDbJnwng7Q1vxF7Y39cuLPvBvmbHEAzsn9OIlGV4ILCAg9Sn8scpiKam2R2qEskpDOd32dyRL2GnelNtA00JNmbShIW
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 910232061133-3ulgqkubdd6juaokq9lea3b7o28tdreo.apps.googleusercontent.com
+            client-secret: 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
+          github:
+            client-id: ffac64f85028b6e6abe5
+            client-secret: 4c93a493bc846ec4bc509accd923b37778a36060
+          facebook:
+            client-id: 3456664201316895
+            client-secret: c552c8824bbe521f286a01689a9025ec

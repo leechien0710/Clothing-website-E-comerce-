@@ -1,0 +1,30 @@
+### API danh sách sản phẩm
+GET http://localhost:8080/api/products
+
+### API thêm sản phẩm
+POST http://localhost:8080/api/products
+Content-Type: application/json
+
+{
+  "name": "Dụng cụ dọn phân cho thú cưng",
+  "description": "Collecting your pet's waste has never been easier before as you simply need to attach the waste bag to our Pooper Scooper and you're ready to collect your pet's waste from any surface!",
+  "price": 6.99,
+  "color": "Red, Pink, Yellow, Gray",
+  "categoryId": "bdf00120-ebc8-11ed-a05b-0242ac120003"
+}
+
+### API cập nhật sản phẩm
+PUT http://localhost:8080/api/products/a3c369f8-cdc1-4e41-b3f2-4cfaba3dd0cd
+Content-Type: application/json
+
+{
+  "name": "Dụng cụ rửa chân thú cưng",
+  "description": "Collecting your pet's waste has never been easier before as you simply need to attach the waste bag to our Pooper Scooper and you're ready to collect your pet's waste from any surface!",
+  "price": 5,
+  "size": "M, L",
+  "color": "Red, Pink, Yellow, Gray",
+  "categoryId": "bdf00120-ebc8-11ed-a05b-0242ac120003"
+}
+
+### API xóa sản phẩm
+DELETE http://localhost:8080/api/products/a3c369f8-cdc1-4e41-b3f2-4cfaba3dd0cd
