@@ -63,6 +63,7 @@ public class Product {
   @JoinColumn(insertable = false, updatable = false, name = "category_id")
   protected Category category;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "product")
   protected List<Cart> items;
 

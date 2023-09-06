@@ -69,6 +69,14 @@
                                 <span class="pd-detail__click-wrap">
                                     <span class="pd-detail__click-count" th:text="'Views: ' + ${product.views}"></span>
                                 </span>
+                                <div>
+                                <div class="fb-share-button" data-href="http://localhost:8080/" data-layout="" data-size=""><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+                                <div data-href="https://shopee.vn/" data-layout="" data-size="">
+  <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshopee.vn%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
+    <img src="/images/shopee.png" alt="Shopee Logo" width="60" height="32">
+  </a>
+</div>
+                                </div>
                             </div>
                         </div>
 
@@ -184,5 +192,9 @@
 
 
 <div th:replace="fragments/scripts :: scripts"></div>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0" nonce="w8hJ02oW"></script>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0" nonce="kToRz7x9"></script>
 </body>
 </html>

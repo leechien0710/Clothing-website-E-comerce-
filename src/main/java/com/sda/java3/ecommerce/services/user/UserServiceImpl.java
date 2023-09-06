@@ -2,7 +2,9 @@ package com.sda.java3.ecommerce.services.user;
 
 import com.sda.java3.ecommerce.domains.User;
 import com.sda.java3.ecommerce.repositories.UserRepository;
+import com.sda.java3.ecommerce.utils.CustomException;
 
+import org.hibernate.validator.internal.metadata.facets.Validatable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +47,10 @@ public class UserServiceImpl {
         }
         return null;
     }
-
+    public void saveUserRequest(SaveUserRequest saveUserRequest)  {
+    	
+    	userRepository.save(saveUserRequest);
+    }
     
 }
 

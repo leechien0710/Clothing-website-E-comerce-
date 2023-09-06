@@ -2,6 +2,7 @@ package com.sda.java3.ecommerce;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,11 +17,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.authorizeRequests()
-        .antMatchers("/**", "/sign-up/**", "/sign-in/**", "/sign-out")
-        .permitAll()
-        .anyRequest()
-        .authenticated()
-        .and()
+    .antMatchers("/**").permitAll()
+    .antMatchers(HttpMethod.POST, "/**").permitAll()
+    .and()
+    .csrf().disable()
+    
         .oauth2Login()
         .loginPage("/sign-in")
         .defaultSuccessUrl("/sign-in/success")

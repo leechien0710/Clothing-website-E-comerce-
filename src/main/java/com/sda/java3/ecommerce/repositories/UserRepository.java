@@ -1,6 +1,8 @@
 package com.sda.java3.ecommerce.repositories;
 
 import com.sda.java3.ecommerce.domains.User;
+import com.sda.java3.ecommerce.services.user.SaveUserRequest;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -17,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     User save(User user);
 
     void deleteById(UUID id);
+
+	void save(SaveUserRequest saveUserRequest);
 }

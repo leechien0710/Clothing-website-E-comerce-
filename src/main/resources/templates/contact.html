@@ -30,7 +30,7 @@
                         <div class="col-lg-12">
                             <div class="g-map">
                                 <div id="map">
-                                    <iframe width="100%" height="100%" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Zogu%20i%20zi+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4462.260416339067!2d105.78507295295132!3d20.980458723157895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ad90e2a1549d%3A0x29a19ed11e54f2b6!2sCIE%20PTIT!5e0!3m2!1svi!2s!4v1683362623542!5m2!1svi!2s" width="1200" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
@@ -69,9 +69,9 @@
 
                                 <span class="contact-o__info-text-1">OUR LOCATION</span>
 
-                                <span class="contact-o__info-text-2">Zogu i Zi</span>
+                                <span class="contact-o__info-text-2">CIE PTIT</span>
 
-                                <span class="contact-o__info-text-2">Tirane, Albania</span>
+                                <span class="contact-o__info-text-2">Hà Đông, Hà Nội</span>
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,8 @@
                             <div class="contact-area__heading">
                                 <h2>Get In Touch</h2>
                             </div>
-                            <form class="contact-f" method="post" action="index.html">
+                            
+                            <form class="contact-f" method="post" action="index.html" onsubmit="sebdEmail(event)">
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 u-h-100">
                                         <div class="u-s-m-b-30">
@@ -145,6 +146,33 @@
                                     </div>
                                 </div>
                             </form>
+                            
+                             <script src="https://smtpjs.com/v3/smtp.js"></script>
+
+    <script>
+
+        function sebdEmail(e) {
+            e.preventDefault();
+
+            Email.send({
+                Host : "smtp.elasticemail.com",
+                Username : "tkmoi000002@gmail.com",
+                Password : "F479BA863CB7A4FDAF156C15580909CA2EF2",
+                To : 'tkmoi000002@gmail.com',
+                From : 'tkmoi000002@gmail.com',
+                Subject : document.getElementById('c-subject').value,
+                Body : "Từ " +" " +document.getElementById('c-email').value +"\n"
+                		+"Tên: "+ document.getElementById('c-name').value +"\n"
+               			+"Nội dung: " +document.getElementById('c-message').value
+            }).then(
+              message => alert(message)
+            );
+
+            return true;
+        }
+
+
+    </script>
                         </div>
                     </div>
                 </div>

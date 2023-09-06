@@ -42,7 +42,7 @@ public class CheckoutController extends BaseController {
     	for (Cart cart:carts) {
     		tt += cart.getProduct().getPrice()* cart.getQuantity();
     	}
-    	int tt1 = Double.valueOf(tt).intValue();
+    	int tt1 = Double.valueOf(tt).intValue() ;
     	 session.setAttribute("tt", tt1);
          model.addAttribute("carts",carts);
         return "checkout";

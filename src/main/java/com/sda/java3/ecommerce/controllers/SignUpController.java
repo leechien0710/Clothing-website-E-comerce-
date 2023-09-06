@@ -53,17 +53,10 @@ public class SignUpController extends BaseController {
       BindingResult bindingResult,
       ModelMap modelMap,
       Model model,
-      HttpServletRequest request,
-      @RequestParam(name = "g-recaptcha-response") String recaptchaResponse) {
+      HttpServletRequest request
+      ) {
     initModelMap(modelMap);
-    String ip = request.getRemoteAddr();
-    String captchaVerifyMessage = captchaService.verifyRecaptcha(ip, recaptchaResponse);
-
-    if (StringUtils.isNotEmpty(captchaVerifyMessage)) {
-      Map<String, Object> response = new HashMap<>();
-      model.addAttribute("captcha", captchaVerifyMessage);
-      return "sign-in";
-    }
+    
     if (bindingResult.hasErrors()) {
       return "sign-up";
     }
